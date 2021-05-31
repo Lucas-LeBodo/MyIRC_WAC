@@ -9,7 +9,7 @@ function App() {
 
   useEffect(() => {
     socket.on("message", ({ name, message }) => {
-      console.log(name, message)
+      console.log(name, message);
       setChat([...chat, { name, message }]);
     });
   });
@@ -26,12 +26,14 @@ function App() {
   };
 
   const renderChat = () => {
-    return chat.map(({ name, message }) => {
-      <div key={name}>
-        <h3>
-          {name} : <span>{message}</span>
-        </h3>
-      </div>;
+    return chat.map(({ name, message }, index) => {
+      return (
+        <div key={index}>
+          <h3 key={index}>
+            {name} : <span>{message}</span>
+          </h3>
+        </div>
+      );
     });
   };
 
