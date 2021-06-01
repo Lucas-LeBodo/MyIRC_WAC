@@ -3,11 +3,12 @@ import io from "socket.io-client";
 
 const socket = io.connect("http://localhost:4000");
 
-function Home() {
+function Home(props) {
   const [state, setState] = useState({ message: "", name: "" });
   const [chat, setChat] = useState([]);
 
   useEffect(() => {
+    if (props.name) console.log(props.name);
     socket.on("message", ({ name, message }) => {
       console.log(name, message);
       setChat([...chat, { name, message }]);
