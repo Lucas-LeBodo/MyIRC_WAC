@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { Redirect } from "react-router";
 import io from "socket.io-client";
 
@@ -22,7 +22,7 @@ function Login() {
 
   if (redirect === true) {
     localStorage.setItem("name", name);
-    return <Redirect to={{ pathname: "/" }} />;
+    return <Redirect to={{ pathname: `/main/${name}` }} />;
   }
 
   return (
