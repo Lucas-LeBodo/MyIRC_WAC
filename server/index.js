@@ -28,6 +28,14 @@ io.on("connection", (socket) => {
 
   socket.on("message", ({ name, message }) => {
     io.emit("message", { name, message });
+    // Join a conversation
+    const { roomId } = socket.handshake.query;
+    socket.join(roomId);
+
+    // Listen for new messages
+    socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
+      io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
+    });
   });
 
 /*  socket.on("disconnect", () => {
