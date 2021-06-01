@@ -1,3 +1,5 @@
+require('dotenv').config();
+const { PORT } = process.env;
 const app = require("express");
 const cors = require("cors");
 const http = require("http").createServer(app);
@@ -7,8 +9,6 @@ const io = require("socket.io")(http, {
     methods: ["GET", "POST"],
   },
 });
-const port = 4000;
-
 io.on("connection", (socket) => {
   //console.log("New WebSocket connection");
 
@@ -30,11 +30,12 @@ io.on("connection", (socket) => {
     io.emit("message", { name, message });
   });
 
-  socket.on("disconnect", () => {
+/*  socket.on("disconnect", () => {
     io.emit("message", "A user has left");
   });
+*/
 });
 
-http.listen(port, () => {
-  console.log(`server is listen on port ${port}!`);
+http.listen(PORT || 4000, () => {
+  console.log(`server is listen on port ${PORT}!`);
 });
