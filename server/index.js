@@ -10,21 +10,6 @@ const io = require("socket.io")(http, {
   },
 });
 io.on("connection", (socket) => {
-  //console.log("New WebSocket connection");
-
-  //socket.emit("message", "welcome !");
-
-  //socket.broadcast.emit("message", "A new user has joined!");
-
-  /* socket.on("sendMessage", (message, callback) => {
-    const filter = new Filter();
-
-    if (filter.isProfane(message)) {
-      return callback("Profanity is not allowed!");
-    }
-    io.emit("message", message);
-    callback();
-  }); */
 
   socket.on("joinRoom", (room, username) => {
     socket.join(room);

@@ -22,7 +22,7 @@ function Login() {
 
   if (redirect === true) {
     localStorage.setItem("name", name);
-    return <Redirect to={{ pathname: `/main/${name}` }} />;
+    return <Redirect to={{ pathname: `/room/${name}/testRoom` }} />;
   }
 
   return (

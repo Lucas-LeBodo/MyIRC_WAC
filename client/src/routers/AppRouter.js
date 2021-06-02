@@ -10,8 +10,8 @@ const AppRouter = () => {
       <Fragment>
         <Switch>
           <Route path="/" component={Login} exact={true} />
-          <Route path="/main/:name" component={Main} exact={true} />
           <Route path="/room/:name/:room" component={Room} exact={true} />
+          {/* <Route path="/main/:name" component={Main} exact={true} /> */}
         </Switch>
       </Fragment>
     </BrowserRouter>
