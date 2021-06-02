@@ -26,14 +26,14 @@ io.on("connection", (socket) => {
     callback();
   }); */
 
-  socket.on("joinRoom", (room) => {
+  socket.on("joinRoom", (room, username) => {
     socket.join(room);
-    io.to(room).emit("message", `A new user join ${room}`)
+    io.to(room).emit("message", `A new user join ${username}`)
   });
 
   socket.on("message", (message, room) => {
     if (!room) {
-      io.emit("message", message);
+      io.emit("globalMessage", message);
     } else {
       socket.join(room);
       io.to(room).emit("message", message);
