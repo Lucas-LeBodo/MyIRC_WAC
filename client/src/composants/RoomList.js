@@ -6,19 +6,28 @@ const RoomList = (props) => {
         setRoomName(event.target.value);
     };
 
+    const handleSubmit = () => {
+
+    }
 
     return (
         <div className="home-container">
-            <input
-                type="text"
-                placeholder="Room"
-                value={roomName}
-                onChange={handleRoomNameChange}
-                className="text-input-field"
-            />
-            <Link to={`/main/${props.name}/${roomName}`} className="enter-room-button">
-                Join room
-            </Link>
+          <form onSubmit={handlesubmit}>
+                <input
+                    type="text"
+                    placeholder="Room"
+                    value={roomName}
+                    onChange={handleRoomNameChange}
+                    className="text-input-field"
+                />
+                <input type="submit"/>
+                <Link to={`/main/${props.name}/${roomName}`} className="enter-room-button">
+                    Join room
+                </Link>
+            </form>
+            <div className="list">
+
+            </div>
         </div>
     );
 }
