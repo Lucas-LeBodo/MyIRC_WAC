@@ -1,7 +1,7 @@
 require("dotenv").config();
 const { PORT } = process.env;
 const app = require("express");
-const cors = require("cors");
+const { addUser, getUsersInRoom } = require("./utils/users");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http, {
   cors: {
@@ -10,9 +10,12 @@ const io = require("socket.io")(http, {
   },
 });
 io.on("connection", (socket) => {
-
   socket.on("joinRoom", (room, username) => {
-    socket.join(room);
+    //console.log(username,room)
+    const { user } = addUser({ id: socket.id, username, room });
+    const usersRoom = getUsersInRoom(room)
+    socket.join(user.room);
+    console.log(usersRoom);
     // io.to(room).emit("message", `A new user join ${username}`)
   });
 

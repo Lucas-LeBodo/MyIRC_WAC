@@ -13,9 +13,9 @@ function Chat(props) {
     const [room, setRoom] = useState("");
 
     useEffect(() => {
-        socket.emit("joinRoom", room, name);
         setRoom(props.room);
         setName(props.name);
+        socket.emit("joinRoom", props.room, props.name);
     }, []);
 
     useEffect(() => {

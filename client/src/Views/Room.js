@@ -1,17 +1,8 @@
 import React, {Fragment} from "react";
-import Chat from "../composants/Chat";
+import Chat from "../components/Chat";
 
 const ChatRoom = (props) => {
   const roomID = props.match.params.roomID;
-  const [newMessage , setNewMessage] = React.useState("");
-
-  const handleNewMessageChange = (event) => {
-    setNewMessage(event.target.value);
-  };
-
-  const handleSendMessage = () => {
-    setNewMessage("");
-  };
 
   console.log(props)
 

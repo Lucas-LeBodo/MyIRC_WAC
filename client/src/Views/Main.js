@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Redirect } from "react-router";
 import io from "socket.io-client";
-import RoomList from "../composants/RoomList"
+import RoomList from "../components/RoomList"
 
 const socket = io.connect("http://localhost:4000");
 
