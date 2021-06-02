@@ -4,14 +4,16 @@ import io from "socket.io-client";
 
 const socket = io.connect("http://localhost:4000");
 
-function Main(props) {
+function Room(props) {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [redirect, setRedirect] = useState(false);
   const [chat, setChat] = useState([]);
+  const [room, setRoom] = useState("");
 
   useEffect(() => {
-    console.log(props.match.params.name);
+    socket.emit("joinRoom", room);
+    setRoom(props.match.params.room);
     setName(props.match.params.name);
   }, []);
 
@@ -25,7 +27,8 @@ function Main(props) {
 
   const onMessageSubmit = (e) => {
     e.preventDefault();
-    socket.emit("message", `${name} : ${message}`, false);
+    console.log(room);
+    socket.emit("message", `${name} : ${message}`, room);
     setMessage("");
   };
 
@@ -63,4 +66,4 @@ function Main(props) {
   );
 }
 
-export default Main;
+export default Room;

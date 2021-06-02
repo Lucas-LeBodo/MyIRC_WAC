@@ -1,8 +1,8 @@
 import react, { Fragment } from "react";
 import { BrowserRouter, Route, Switch, Link, NavLink } from "react-router-dom";
-import Home from "../Views/Home";
 import Login from "../Views/Login";
 import Main from "../Views/Main";
+import Room from "../Views/Room";
 
 const AppRouter = () => {
   return (
@@ -11,6 +11,7 @@ const AppRouter = () => {
         <Switch>
           <Route path="/" component={Login} exact={true} />
           <Route path="/main/:name" component={Main} exact={true} />
+          <Route path="/room/:name/:room" component={Room} exact={true} />
         </Switch>
       </Fragment>
     </BrowserRouter>

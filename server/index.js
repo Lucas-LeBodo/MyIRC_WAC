@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 const { PORT } = process.env;
 const app = require("express");
 const cors = require("cors");
@@ -26,11 +26,21 @@ io.on("connection", (socket) => {
     callback();
   }); */
 
-  socket.on("message", ({ name, message }) => {
-    io.emit("message", { name, message });
+  socket.on("joinRoom", (room) => {
+    socket.join(room);
+    io.to(room).emit("message", `A new user join ${room}`)
   });
 
-/*  socket.on("disconnect", () => {
+  socket.on("message", (message, room) => {
+    if (!room) {
+      io.emit("message", message);
+    } else {
+      socket.join(room);
+      io.to(room).emit("message", message);
+    }
+  });
+
+  /*  socket.on("disconnect", () => {
     io.emit("message", "A user has left");
   });
 */
