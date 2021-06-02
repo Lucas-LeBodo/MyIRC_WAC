@@ -5,7 +5,7 @@ const cors = require("cors");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "http://localhost:3001",
     methods: ["GET", "POST"],
   },
 });
@@ -26,24 +26,19 @@ io.on("connection", (socket) => {
     callback();
   }); */
 
-  socket.on("message", ({ name, message }) => {
-    io.emit("message", { name, message });
-    // Join a conversation
-    const { roomId } = socket.handshake.query;
+  socket.on("message" , ({name , message}) => {
+    io.emit("message" , {name , message});
+
+    const {roomId} = socket.handshake.query;
     socket.join(roomId);
 
-    // Listen for new messages
-    socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
-      io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
-    });
-  });
 
-/*  socket.on("disconnect", () => {
-    io.emit("message", "A user has left");
+    /*  socket.on("disconnect", () => {
+        io.emit("message", "A user has left");
+      });
+    */
   });
-*/
 });
-
 http.listen(PORT || 4000, () => {
   console.log(`server is listen on port ${PORT}!`);
 });
