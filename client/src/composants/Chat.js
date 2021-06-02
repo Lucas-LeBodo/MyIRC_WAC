@@ -6,33 +6,29 @@ import { Link } from "react-router-dom";
 const socket = io.connect("http://localhost:4000");
 
 function Chat(props) {
-    const [state, setState] = useState({ message: "", name: "" });
+    const [name, setName] = useState("");
+    const [message, setMessage] = useState("");
     const [redirect, setRedirect] = useState(false);
     const [chat, setChat] = useState([]);
+    const [room, setRoom] = useState("");
 
     useEffect(() => {
-        console.log(props.name);
-        const storeName = props.name;
-        setState({ message: "", name: storeName });
+        socket.emit("joinRoom", room, name);
+        setRoom(props.room);
+        setName(props.name);
     }, []);
 
     useEffect(() => {
         if (props.name) console.log(props.name);
-        socket.on("message", ({ name, message }) => {
-            console.log(name, message);
-            setChat([...chat, { name, message }]);
+        socket.on("message", (message) => {
+            setChat([...chat, message]);
         });
     });
 
-    const onTextChange = (e) => {
-        setState({ ...state, [e.target.name]: e.target.value });
-    };
-
     const onMessageSubmit = (e) => {
         e.preventDefault();
-        const { name, message } = state;
-        socket.emit("message", { name, message });
-        setState({ message: "", name });
+        socket.emit("message", `${name} : ${message}`, room);
+        setMessage("");
     };
 
     if (redirect !== false) {
@@ -40,12 +36,10 @@ function Chat(props) {
     }
 
     const renderChat = () => {
-        return chat.map(({ name, message }, index) => {
+        return chat.map((message, index) => {
             return (
                 <div key={index}>
-                    <h3 key={index}>
-                        {name} : <span>{message}</span>
-                    </h3>
+                    <h3 key={index}>{message}</h3>
                 </div>
             );
         });
@@ -54,11 +48,11 @@ function Chat(props) {
     return (
         <Fragment>
             <form onSubmit={onMessageSubmit}>
+                <label>message</label>
                 <input
                     name="message"
-                    placeholder={"message"}
-                    onChange={(e) => onTextChange(e)}
-                    value={state.message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    value={message}
                 />
                 <button>Send message</button>
             </form>

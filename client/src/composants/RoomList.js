@@ -12,7 +12,7 @@ const RoomList = (props) => {
 
     return (
         <div className="home-container">
-          <form onSubmit={handlesubmit}>
+          <form>
                 <input
                     type="text"
                     placeholder="Room"

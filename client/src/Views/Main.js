@@ -6,14 +6,14 @@ import RoomList from "../composants/RoomList"
 const socket = io.connect("http://localhost:4000");
 
 function Home(props) {
-    const [state , setState] = useState({message: "" , name: ""});
-    const [chat , setChat] = useState([]);
+  const [state , setState] = useState({message: "" , name: ""});
+  const [chat , setChat] = useState([]);
 
-    return (
-        <Fragment>
-            <RoomList name={props.match.params.name}/>
-        </Fragment>
-    );
+  return (
+      <Fragment>
+        <RoomList name={props.match.params.name}/>
+      </Fragment>
+  );
 }
 
 export default Home;
