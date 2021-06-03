@@ -1,0 +1,58 @@
+// Colors :
+
+$white: #ffffff;
+$blue  : #7289da;
+$lightgrey: #424549;
+$grey: #36393e;
+$darkgrey: #282b30;
+$dark: #1e2124;
+$black: #000000;
+
+
+html {
+  background: $grey;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 0.01em solid $darkgrey;
+  border-radius: 0.2em;
+  box-shadow: 0.2em 0.2em 0.1em $dark;
+  width: 25%;
+  height: auto;
+  padding: 2%;
+  margin: 10% auto auto;
+  background: $lightgrey;
+}
+
+h1 {
+  padding: 0;
+  margin: 1em;
+  color: $white;
+  background: $lightgrey;
+}
+
+.loginInput{
+  font-size: 1em;
+  color: $blue;
+  background: $lightgrey;
+  padding-top: 1em;
+  border:0;
+  border-bottom:1px solid #555;
+
+  &:focus {
+    border:none;
+    outline:none;
+    border-bottom:2px solid $blue;
+    width: auto;
+    height: auto;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment } from "react";
 import { Redirect } from "react-router";
 import io from "socket.io-client";
 
@@ -27,10 +27,11 @@ function Login() {
 
   return (
     <Fragment>
-      <form onSubmit={onNameSubmit}>
-        <label>Name</label>
-        <input name="name" onChange={(e) => onTextChange(e)} value={name} />
-        <button>Log in</button>
+      <form onSubmit={onNameSubmit} className={"loginForm"}>
+        <h1> Login </h1>
+        <div className="loginDivForm">
+          <input name="name" onChange={(e) => onTextChange(e)} value={name} placeholder={"Choose your username"} className="loginInput" autoComplete="off" />
+        </div>
       </form>
     </Fragment>
   );
