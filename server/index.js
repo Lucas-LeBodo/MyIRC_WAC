@@ -29,7 +29,8 @@ io.on("connection", (socket) => {
 
   socket.on("sendPrivateMessage", (message, to) => {
     const recipient = getUserByName(to);
-    socket.to(recipient.id).emit(message);
+    console.log(recipient[0].id);
+    socket.to(recipient[0].id).emit("message", message);
   });
 
   /*  socket.on("disconnect", () => {
