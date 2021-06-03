@@ -13,7 +13,15 @@ const getUsersInRoom = (room) => {
   return users.filter((user) => user.room === room);
 };
 
+const getUserByName = (username) => {
+  username = username.trim().toLowerCase();
+  const user = users.filter((user) => user.username === username);
+  if (!user) return console.log("user doesn't exist");
+  return user;
+};
+
 module.exports = {
   addUser,
   getUsersInRoom,
+  getUserByName,
 };
