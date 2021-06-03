@@ -15,6 +15,7 @@ function Login() {
 
   const onNameSubmit = (e) => {
     e.preventDefault();
+    if (name === "") return console.log("empty name");
     socket.emit("name", name);
     setName(name);
     setRedirect(true);
