@@ -1,7 +1,13 @@
 require("dotenv").config();
 const { PORT } = process.env;
 const app = require("express");
-const { addUser, getUsersInRoom, getUserByName } = require("./utils/users");
+const {
+  addUser,
+  getUsersInRoom,
+  getUserByName,
+  removeUser,
+  getAllUsers,
+} = require("./utils/users");
 const { addRoom, getRooms } = require("./utils/rooms");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http, {
@@ -33,10 +39,9 @@ io.on("connection", (socket) => {
     socket.to(recipient[0].id).emit("message", message);
   });
 
-  /*  socket.on("disconnect", () => {
-    io.emit("message", "A user has left");
+  socket.on("disconnect", () => {
+    removeUser(socket.id);
   });
-*/
 });
 
 http.listen(PORT || 4000, () => {
