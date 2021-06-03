@@ -30,6 +30,11 @@ function Chat(props) {
         socket.emit("message", `${name} : ${message}`, room);
         setMessage("");
     };
+    /* const onPrivateMessageSubmit = (e) => {
+        e.preventDefault();
+        socket.emit("sendPrivateMessage", `${name} : ${message}`, "test");
+        setMessage("");
+    }; */
 
     if (redirect !== false) {
         return <Redirect to={{ pathname: redirect }} />;
@@ -56,6 +61,15 @@ function Chat(props) {
                 />
                 <button>Send message</button>
             </form>
+            {/* <form onSubmit={onPrivateMessageSubmit}>
+                <label>message</label>
+                <input
+                    name="message"
+                    onChange={(e) => setMessage(e.target.value)}
+                    value={message}
+                />
+                <button>Send private message</button>
+            </form> */}
             <button onClick={() => setRedirect("/")}>disconnect</button>
             <div>
                 <h1>Chat log</h1>

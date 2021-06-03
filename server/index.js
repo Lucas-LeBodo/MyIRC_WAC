@@ -1,7 +1,7 @@
 require("dotenv").config();
 const { PORT } = process.env;
 const app = require("express");
-const { addUser, getUsersInRoom } = require("./utils/users");
+const { addUser, getUsersInRoom, getUserByName } = require("./utils/users");
 const { addRoom, getRooms } = require("./utils/rooms");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http, {
@@ -25,6 +25,12 @@ io.on("connection", (socket) => {
       socket.join(room);
       io.to(room).emit("message", message);
     }
+  });
+
+  socket.on("sendPrivateMessage", (message, to) => {
+    const recipient = getUserByName(to);
+    console.log(recipient[0].id);
+    socket.to(recipient[0].id).emit("message", message);
   });
 
   /*  socket.on("disconnect", () => {
