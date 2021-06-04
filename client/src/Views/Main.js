@@ -1,5 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { Redirect } from "react-router";
+import React, {Fragment } from "react";
 import RoomList from "../components/RoomList"
 
 function Home(props) {
