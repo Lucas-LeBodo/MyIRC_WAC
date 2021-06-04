@@ -22,7 +22,7 @@ function Login() {
   };
 
   if (redirect === true) {
-    localStorage.setItem("name", name);
+
     return <Redirect to={{ pathname: `/main/${name}` }} />;
   }
 
@@ -31,7 +31,7 @@ function Login() {
       <form onSubmit={onNameSubmit} className={"loginForm"}>
         <h1> Login </h1>
         <div className="loginDivForm">
-          <input name="name" onChange={(e) => onTextChange(e)} value={name} placeholder={"Choose your username"} className="loginInput" autoComplete="off" />
+          <input name="name" onChange={(e) => onTextChange(e)} value={name} placeholder={"Username"} className="loginInput" autoComplete="off" />
         </div>
       </form>
     </Fragment>
