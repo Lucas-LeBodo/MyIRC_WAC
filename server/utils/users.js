@@ -1,15 +1,16 @@
 const users = [];
 
-const addUser = ({ id, username, room }) => {
+const addUser = ({ id, username, room, nickname }) => {
   username = username.trim().toLowerCase();
   room = room.trim().toLowerCase();
+  if (nickname) nickname = nickname.trim().toLowerCase();
 
   const existingUser = users.find((user) => {
     return user.username === username;
   });
   if (existingUser) return console.log("user already exist");
 
-  const user = { id, username, room };
+  const user = { id, username, room, nickname };
   users.push(user);
   return { user };
 };
@@ -38,10 +39,17 @@ const getAllUsers = () => {
   return users;
 };
 
+const addNickname = (id, nickname) => {
+  const index = users.findIndex((user) => user.id === id);
+  users[index].nickname = nickname;
+  return users[index];
+};
+
 module.exports = {
   addUser,
   getUsersInRoom,
   getUserByName,
   removeUser,
   getAllUsers,
+  addNickname,
 };
