@@ -1,7 +1,7 @@
 require("dotenv").config();
 const { PORT } = process.env;
 const app = require("express");
-const {  addUser,  getUsersInRoom,  getUserByName,  removeUser,  getAllUsers,} = require("./utils/users");
+const { addUser, getUsersInRoom, getUserByName, removeUser, getAllUsers, addNickname } = require("./utils/users");
 const { addRoom, getRooms } = require("./utils/rooms");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http, {
@@ -13,8 +13,16 @@ const io = require("socket.io")(http, {
 io.on("connection", (socket) => {
   socket.on("joinRoom", (room, username) => {
     addRoom(room);
-    const { user } = addUser({ id: socket.id, username, room });
-    socket.join(user.room);
+    const nickname = false;
+    try {
+      const { user } = addUser({ id: socket.id, username, room, nickname });
+      socket.join(user.room);
+    } catch (e) {
+      const { user } = getUserByName(username);
+      socket.join(user.room);
+    }
+
+    console.log(getRooms());
     // io.to(room).emit("message", `A new user join ${username}`)
   });
 
