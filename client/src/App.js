@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
-import AppRouter from "./routers/AppRouter";
+import AppRouter from "./Routes/AppRouter";
 import './Styles/style.scss';
 
 function App() {
