@@ -8,6 +8,7 @@ const {
   removeUser,
   getAllUsers,
   addNickname,
+  changeRoom,
 } = require("./utils/users");
 const { addRoom, getRooms, removeRoom } = require("./utils/rooms");
 const http = require("http").createServer(app);
@@ -25,7 +26,8 @@ io.on("connection", (socket) => {
       const { user } = addUser({ id: socket.id, username, room, nickname });
       socket.join(user.room);
     } catch (e) {
-      const { user } = getUserByName(username);
+      const { user } = changeRoom(socket.id, room);
+      //const { user } = getUserByName(username);
       socket.join(user.room);
     }
 

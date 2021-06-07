@@ -45,6 +45,12 @@ const addNickname = (id, nickname) => {
   return users[index];
 };
 
+const changeRoom = (id, room) => {
+  const index = users.findIndex((user) => user.id === id);
+  users[index].room = room;
+  return users[index];
+};
+
 module.exports = {
   addUser,
   getUsersInRoom,
@@ -52,4 +58,5 @@ module.exports = {
   removeUser,
   getAllUsers,
   addNickname,
+  changeRoom,
 };
