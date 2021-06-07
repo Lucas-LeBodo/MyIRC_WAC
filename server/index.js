@@ -9,7 +9,7 @@ const {
   getAllUsers,
   addNickname,
 } = require("./utils/users");
-const { addRoom, getRooms } = require("./utils/rooms");
+const { addRoom, getRooms, removeRoom } = require("./utils/rooms");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http, {
   cors: {
