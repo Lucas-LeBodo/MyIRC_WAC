@@ -27,6 +27,12 @@ const getUserByName = (username) => {
   return user;
 };
 
+const getUserById = (id) => {
+  const user = users.filter((user) => user.id === id);
+  if (!user) return console.log("user doesn't exist");
+  return user;
+};
+
 const removeUser = (id) => {
   const index = users.findIndex((user) => user.id === id);
 
@@ -59,4 +65,5 @@ module.exports = {
   getAllUsers,
   addNickname,
   changeRoom,
+  getUserById,
 };

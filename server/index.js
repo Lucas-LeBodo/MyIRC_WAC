@@ -9,8 +9,10 @@ const {
   getAllUsers,
   addNickname,
   changeRoom,
+  getUserById,
 } = require("./utils/users");
 const { addRoom, getRooms, removeRoom } = require("./utils/rooms");
+const { join } = require("path");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http, {
   cors: {
@@ -33,6 +35,16 @@ io.on("connection", (socket) => {
 
     console.log(getRooms());
     // io.to(room).emit("message", `A new user join ${username}`)
+  });
+
+  socket.on("leftRoom", () => {
+    try {
+      const { user } = getUserById(socket.id);
+      socket.leave(user.room);
+      const { user } = changeRoom(socket.id, false);
+    } catch (e) {
+      console.log(e);
+    }
   });
 
   socket.on("message", (message, room) => {
