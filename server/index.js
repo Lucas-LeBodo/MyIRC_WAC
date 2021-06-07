@@ -27,11 +27,12 @@ io.on("connection", (socket) => {
     try {
       const { user } = addUser({ id: socket.id, username, room, nickname });
       socket.join(user.room);
-    } catch (e) {
-      const { user } = changeRoom(socket.id, room);
-      //const { user } = getUserByName(username);
-      socket.join(user.room);
-    }
+      if (!user) {
+        const { user } = changeRoom(socket.id, room);
+        //const { user } = getUserByName(username);
+        socket.join(user.room);
+      }
+    } catch (e) {}
 
     console.log(getRooms());
     // io.to(room).emit("message", `A new user join ${username}`)
@@ -41,18 +42,18 @@ io.on("connection", (socket) => {
     try {
       const { user } = getUserById(socket.id);
       socket.leave(user.room);
-      const { user } = changeRoom(socket.id, false);
+      changeRoom(socket.id, false);
     } catch (e) {
       console.log(e);
     }
   });
 
-  socket.on("message", (message, room) => {
+  socket.on("message", (from, messageContent, room) => {
     if (!room) {
-      io.emit("globalMessage", message);
+      io.emit("globalMessage", from, messageContent);
     } else {
       socket.join(room);
-      io.to(room).emit("message", message);
+      io.to(room).emit("message", from, messageContent);
     }
   });
 
