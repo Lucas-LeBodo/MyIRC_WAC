@@ -7,7 +7,7 @@ const socket = io.connect("http://localhost:4000");
 
 function Chat(props) {
     const [name, setName] = useState("");
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState("") 
     const [redirect, setRedirect] = useState(false);
     const [chat, setChat] = useState([]);
     const [room, setRoom] = useState("");
