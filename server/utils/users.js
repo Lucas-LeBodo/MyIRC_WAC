@@ -8,7 +8,7 @@ const addUser = ({ id, username, room, nickname }) => {
   const existingUser = users.find((user) => {
     return user.username === username;
   });
-  if (existingUser) return console.log("user already exist");
+  if (existingUser) return false;
 
   const user = { id, username, room, nickname };
   users.push(user);
@@ -52,9 +52,13 @@ const addNickname = (id, nickname) => {
 };
 
 const changeRoom = (id, room) => {
-  const index = users.findIndex((user) => user.id === id);
-  users[index].room = room;
-  return users[index];
+  try {
+    const index = users.findIndex((user) => user.id === id);
+    users[index].room = room;
+    return users[index];
+  } catch (e) {
+    //console.log(e);
+  }
 };
 
 module.exports = {
