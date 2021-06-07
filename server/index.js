@@ -1,8 +1,15 @@
 require("dotenv").config();
 const { PORT } = process.env;
 const app = require("express");
-const { addUser, getUsersInRoom, getUserByName, removeUser, getAllUsers, addNickname } = require("./utils/users");
-const { addRoom, getRooms } = require("./utils/rooms");
+const {
+  addUser,
+  getUsersInRoom,
+  getUserByName,
+  removeUser,
+  getAllUsers,
+  addNickname,
+} = require("./utils/users");
+const { addRoom, getRooms, removeRoom } = require("./utils/rooms");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http, {
   cors: {
