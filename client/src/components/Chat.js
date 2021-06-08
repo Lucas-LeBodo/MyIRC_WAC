@@ -1,4 +1,5 @@
 import React, {useState, useEffect, Fragment} from "react";
+import { FaSignOutAlt } from "react-icons/fa"
 import { Redirect } from "react-router";
 import io from "socket.io-client";
 
@@ -51,15 +52,6 @@ function Chat(props) {
 
     return (
         <Fragment>
-            <form onSubmit={onMessageSubmit}>
-                <label>message</label>
-                <input
-                    name="message"
-                    onChange={(e) => setMessage(e.target.value)}
-                    value={message}
-                />
-                <button>Send message</button>
-            </form>
             {/* <form onSubmit={onPrivateMessageSubmit}>
                 <label>message</label>
                 <input
@@ -69,11 +61,19 @@ function Chat(props) {
                 />
                 <button>Send private message</button>
             </form> */}
-            <button onClick={() => setRedirect("/")}>disconnect</button>
+            <button onClick={() => setRedirect("/")}><FaSignOutAlt/></button>
             <div>
-                <h1>Chat log</h1>
                 {renderChat()}
             </div>
+            <form onSubmit={onMessageSubmit}>
+                <input
+                    name="message"
+                    onChange={(e) => setMessage(e.target.value)}
+                    value={message}
+                    placeholder="Send Message !"
+                />
+                <button>Send message</button>
+            </form>
         </Fragment>
     );
 }
