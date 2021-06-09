@@ -8,7 +8,7 @@ const addUser = ({ id, username, room, nickname }) => {
   const existingUser = users.find((user) => {
     return user.username === username;
   });
-  if (existingUser) return console.log("user already exist");
+  if (existingUser) return false;
 
   const user = { id, username, room, nickname };
   users.push(user);
@@ -23,7 +23,13 @@ const getUsersInRoom = (room) => {
 const getUserByName = (username) => {
   username = username.trim().toLowerCase();
   const user = users.filter((user) => user.username === username);
-  if (!user) return console.log("user doesn't exist");
+  if (!user) return;
+  return user;
+};
+
+const getUserById = (id) => {
+  const user = users.filter((user) => user.id === id);
+  if (!user) return;
   return user;
 };
 
@@ -45,6 +51,16 @@ const addNickname = (id, nickname) => {
   return users[index];
 };
 
+const changeRoom = (id, room) => {
+  try {
+    const index = users.findIndex((user) => user.id === id);
+    users[index].room = room;
+    return users[index];
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 module.exports = {
   addUser,
   getUsersInRoom,
@@ -52,4 +68,6 @@ module.exports = {
   removeUser,
   getAllUsers,
   addNickname,
+  changeRoom,
+  getUserById,
 };

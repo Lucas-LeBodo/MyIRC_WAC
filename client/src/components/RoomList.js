@@ -31,6 +31,7 @@ const RoomList = (props) => {
                         value={roomName}
                         onChange={handleRoomNameChange}
                         className="text-input-field"
+                        autoComplete="off"
                     />
                   </div>
               </div>

@@ -4,8 +4,6 @@ import Chat from "../components/Chat";
 const ChatRoom = (props) => {
   const roomID = props.match.params.roomID;
 
-  console.log(props)
-
   return (
       <Fragment>
         <div className="chat-room-container">

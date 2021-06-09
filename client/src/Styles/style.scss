@@ -15,6 +15,7 @@ html, body {
   padding: 0;
   height: 100%;
   width: 100%;
+  max-width: 100vw;
 }
 
 
@@ -44,7 +45,7 @@ h1 {
   background: $lightgrey;
 }
 
-.loginInput, .text-input-field{
+.loginInput, .text-input-field, .messageInput{
   font-size: 1em;
   color: $blue;
   background: $lightgrey;
@@ -89,10 +90,32 @@ Link {
   color: $blue;
 }
 
+.messages{
+  display: block;
+  width: 98vw;
+  line-break: anywhere;
+  &:hover {
+    background: $darkgrey;
+  }
+}
+
 .pseudo {
+  display: inline;
   color: $blue;
 }
 
 .msg {
+  display: inline;
   color: $white;
+}
+
+.messageInput {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  &:focus {
+    color: $white;
+    width: 100vw;
+  }
 }
