@@ -2,7 +2,7 @@ const rooms = [];
 
 const addRoom = (room) => {
   room = room.trim().toLowerCase();
-  if (rooms.includes(room)) return console.log("room exist");
+  if (rooms.includes(room)) return;
   rooms.push(room);
   return room;
 };

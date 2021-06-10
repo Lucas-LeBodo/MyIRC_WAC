@@ -23,13 +23,13 @@ const getUsersInRoom = (room) => {
 const getUserByName = (username) => {
   username = username.trim().toLowerCase();
   const user = users.filter((user) => user.username === username);
-  if (!user) return console.log("user doesn't exist");
+  if (!user) return;
   return user;
 };
 
 const getUserById = (id) => {
   const user = users.filter((user) => user.id === id);
-  if (!user) return console.log("user doesn't exist");
+  if (!user) return;
   return user;
 };
 
@@ -57,7 +57,7 @@ const changeRoom = (id, room) => {
     users[index].room = room;
     return users[index];
   } catch (e) {
-    //console.log(e);
+    console.log(e);
   }
 };
 

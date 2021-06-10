@@ -1,34 +1,42 @@
-import React, {Fragment} from "react";
-import { Link } from "react-router-dom";
+import React, {useState, Fragment} from "react";
+import { Redirect } from "react-router";
+
 const RoomList = (props) => {
     const [roomName, setRoomName] = React.useState("");
+    const [redirect, setRedirect] = useState(false);
     const handleRoomNameChange = (event) => {
         setRoomName(event.target.value);
     };
 
-    const handleSubmit = () => {
-
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setRedirect(true);
+        if (redirect === true) {
+            return <Redirect to={{pathname: `/main/${props.name}/${roomName}`}}/>;
+        }
     }
 
     return (
-        <div className="home-container">
-          <form>
-                <input
-                    type="text"
-                    placeholder="Room"
-                    value={roomName}
-                    onChange={handleRoomNameChange}
-                    className="text-input-field"
-                />
-                <input type="submit"/>
-                <Link to={`/main/${props.name}/${roomName}`} className="enter-room-button">
-                    Join room
-                </Link>
+        <Fragment>
+          <form onSubmit={handleSubmit} className="formRoom">
+              <div className="selectRoom">
+                  <div className="list">
+                      <p> Salon A<br/> Salon B <br/> Salon C</p>
+                  </div>
+                  <div className="roomForm">
+                      <h1> Choose Room </h1>
+                    <input
+                        type="text"
+                        placeholder="Room"
+                        value={roomName}
+                        onChange={handleRoomNameChange}
+                        className="text-input-field"
+                        autoComplete="off"
+                    />
+                  </div>
+              </div>
             </form>
-            <div className="list">
-
-            </div>
-        </div>
+        </Fragment>
     );
 }
 

@@ -34,7 +34,6 @@ io.on("connection", (socket) => {
       }
     } catch (e) {}
 
-    console.log(getRooms());
     // io.to(room).emit("message", `A new user join ${username}`)
   });
 
@@ -59,7 +58,6 @@ io.on("connection", (socket) => {
 
   socket.on("sendPrivateMessage", (message, to) => {
     const recipient = getUserByName(to);
-    console.log(recipient[0].id);
     socket.to(recipient[0].id).emit("message", message);
   });
 

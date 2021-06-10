@@ -1,16 +1,15 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { Redirect } from "react-router";
+import React, {useState, useEffect, Fragment} from "react";
+import {IoSend} from "react-icons/io5";
 import io from "socket.io-client";
-import { Link } from "react-router-dom";
 
 const socket = io.connect("http://localhost:4000");
 
 function Chat(props) {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
-  const [redirect, setRedirect] = useState(false);
   const [chat, setChat] = useState([]);
   const [room, setRoom] = useState("");
+  const  ChatBox = React.createRef();
 
   useEffect(() => {
     setRoom(props.room);
@@ -19,33 +18,41 @@ function Chat(props) {
   }, []);
 
   useEffect(() => {
-    if (props.name) console.log(props.name);
     socket.on("message", (from, messageContent) => {
-      setChat([...chat, { from, messageContent }]);
+      setChat( (lastState) => [...lastState, { from, messageContent }]);
     });
-  });
+  },  []);
 
   const onMessageSubmit = (e) => {
     e.preventDefault();
     socket.emit("message", name, message, room);
     setMessage("");
+    scrollToMyRef();
   };
+
+   const scrollToMyRef = () => {
+        const scroll =
+            ChatBox.current.scrollHeight -
+            ChatBox.current.clientHeight;
+            ChatBox.current.scrollTo(0, scroll);
+   };
+
+
   /* const onPrivateMessageSubmit = (e) => {
         e.preventDefault();
         socket.emit("sendPrivateMessage", `${name} : ${message}`, "test");
         setMessage("");
     }; */
 
-  if (redirect !== false) {
-    return <Redirect to={{ pathname: redirect }} />;
-  }
 
   const renderChat = () => {
     return chat.map(({ from, messageContent }, index) => {
       return (
         <div key={index}>
           <h3 key={index}>
-            {from} : {messageContent}
+              <div className="messages">
+                <div className="pseudo">{from} :</div> <div className="msg">{messageContent}</div>
+              </div>
           </h3>
         </div>
       );
@@ -54,15 +61,6 @@ function Chat(props) {
 
   return (
     <Fragment>
-      <form onSubmit={onMessageSubmit}>
-        <label>message</label>
-        <input
-          name="message"
-          onChange={(e) => setMessage(e.target.value)}
-          value={message}
-        />
-        <button>Send message</button>
-      </form>
       {/* <form onSubmit={onPrivateMessageSubmit}>
                 <label>message</label>
                 <input
@@ -72,13 +70,23 @@ function Chat(props) {
                 />
                 <button>Send private message</button>
             </form> */}
-      <button onClick={() => setRedirect("/")}>disconnect</button>
-      <div>
-        <h1>Chat log</h1>
-        {renderChat()}
-      </div>
-    </Fragment>
-  );
+
+            <div className="msgBox" ref={ChatBox}>
+                {renderChat()}
+            </div>
+            <form onSubmit={onMessageSubmit} className="msgForm">
+                <input
+                    className="messageInput"
+                    name="message"
+                    onChange={(e) => setMessage(e.target.value)}
+                    value={message}
+                    placeholder="Send Message !"
+                    autoComplete="off"
+                />
+                <button><IoSend/></button>
+            </form>
+        </Fragment>
+    );
 }
 
 export default Chat;
