@@ -32,6 +32,7 @@ io.on("connection", (socket) => {
         //const { user } = getUserByName(username);
         socket.join(user.room);
       }
+      //console.log(getRooms());
     } catch (e) {}
 
     // io.to(room).emit("message", `A new user join ${username}`)
@@ -45,6 +46,11 @@ io.on("connection", (socket) => {
     } catch (e) {
       console.log(e);
     }
+  });
+
+  socket.on("listRoom", () => {
+    const roomList = getRooms();
+    socket.emit("listRoom", roomList);
   });
 
   socket.on("message", (from, messageContent, room) => {
