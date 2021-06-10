@@ -2,6 +2,7 @@
 
 $white: #ffffff;
 $blue  : #7289da;
+$darkblue  : #667bc2;
 $lightgrey: #424549;
 $grey: #36393e;
 $darkgrey: #282b30;
@@ -10,12 +11,10 @@ $black: #000000;
 
 
 html, body {
+  overflow-y: hidden;
   background: $grey;
   margin: 0;
   padding: 0;
-  height: 100%;
-  width: 100%;
-  max-width: 100vw;
 }
 
 
@@ -57,8 +56,6 @@ h1 {
     border:none;
     outline:none;
     border-bottom:2px solid $blue;
-    width: auto;
-    height: auto;
   }
 }
 
@@ -90,6 +87,12 @@ Link {
   color: $blue;
 }
 
+.msgBox {
+  overflow-y: scroll;
+  height: 90vh;
+  padding-left: 5px;
+  width: 99vw;
+}
 .messages{
   display: block;
   width: 98vw;
@@ -109,13 +112,60 @@ Link {
   color: $white;
 }
 
+.msgForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+button {
+  background: $blue;
+  border: none;
+  width: 5vw;
+
+  &:hover {
+    background: $darkblue ;
+    box-shadow: inset 0 0 7px $lightgrey;
+  }
+}
+
+.room-name {
+  background: $darkgrey;
+  margin: 0;
+  padding: 0;
+}
+
+.headerChat {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: $darkgrey;
+  border-bottom: 2px solid $blue;
+}
+
 .messageInput {
-  position: fixed;
-  left: 0;
-  bottom: 0;
+  padding: 0 0 0 2vw;
+  height: 5vh;
   width: 100vw;
+  margin: 0;
   &:focus {
     color: $white;
-    width: 100vw;
+    border-bottom:2px solid $blue;
   }
+}
+
+//Scroll Bar
+
+::-webkit-scrollbar {
+  margin-right: 2px;
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $dark;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  box-shadow: inset 0 0 7px $blue;
 }

@@ -1,6 +1,5 @@
 import React, {useState, useEffect, Fragment} from "react";
-import { FaSignOutAlt } from "react-icons/fa"
-import { Redirect } from "react-router";
+import {IoSend} from "react-icons/io5";
 import io from "socket.io-client";
 
 const socket = io.connect("http://localhost:4000");
@@ -8,9 +7,9 @@ const socket = io.connect("http://localhost:4000");
 function Chat(props) {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
-  const [redirect, setRedirect] = useState(false);
   const [chat, setChat] = useState([]);
   const [room, setRoom] = useState("");
+  const  ChatBox = React.createRef();
 
   useEffect(() => {
     setRoom(props.room);
@@ -28,16 +27,23 @@ function Chat(props) {
     e.preventDefault();
     socket.emit("message", name, message, room);
     setMessage("");
+    scrollToMyRef();
   };
+
+   const scrollToMyRef = () => {
+        const scroll =
+            ChatBox.current.scrollHeight -
+            ChatBox.current.clientHeight;
+            ChatBox.current.scrollTo(0, scroll);
+   };
+
+
   /* const onPrivateMessageSubmit = (e) => {
         e.preventDefault();
         socket.emit("sendPrivateMessage", `${name} : ${message}`, "test");
         setMessage("");
     }; */
 
-  if (redirect !== false) {
-    return <Redirect to={{ pathname: redirect }} />;
-  }
 
   const renderChat = () => {
     return chat.map(({ from, messageContent }, index) => {
@@ -64,11 +70,11 @@ function Chat(props) {
                 />
                 <button>Send private message</button>
             </form> */}
-            <button onClick={() => setRedirect("/")}><FaSignOutAlt/></button>
-            <div>
+
+            <div className="msgBox" ref={ChatBox}>
                 {renderChat()}
             </div>
-            <form onSubmit={onMessageSubmit}>
+            <form onSubmit={onMessageSubmit} className="msgForm">
                 <input
                     className="messageInput"
                     name="message"
@@ -77,7 +83,7 @@ function Chat(props) {
                     placeholder="Send Message !"
                     autoComplete="off"
                 />
-                <button>Send message</button>
+                <button><IoSend/></button>
             </form>
         </Fragment>
     );
