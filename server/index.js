@@ -62,8 +62,8 @@ io.on("connection", (socket) => {
     }
 
     if(messageContent.startsWith('/users')){
-      const usersList = getAllUsers();
-      io.to(room).emit('sendList', usersList )
+      const usersList = getUsersInRoom(room);
+      io.to(room).emit('sendUserList', usersList )
     }
   });
 
