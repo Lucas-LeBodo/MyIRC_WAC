@@ -60,7 +60,13 @@ io.on("connection", (socket) => {
       socket.join(room);
       io.to(room).emit("message", from, messageContent);
     }
+
+    if(messageContent.startsWith('/users')){
+      const usersList = getUsersInRoom(room);
+      io.to(room).emit('sendUserList', usersList )
+    }
   });
+
 
   socket.on("sendPrivateMessage", (message, to) => {
     const recipient = getUserByName(to);
