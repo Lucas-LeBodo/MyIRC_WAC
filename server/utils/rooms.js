@@ -7,7 +7,13 @@ const addRoom = (room) => {
   return room;
 };
 
-const getRooms = () => {
+const getRooms = (filter = "") => {
+  if (filter !== "") {
+    const filterRooms = rooms.filter((room) => {
+      return room.includes(filter);
+    });
+    return filterRooms;
+  }
   return rooms;
 };
 
