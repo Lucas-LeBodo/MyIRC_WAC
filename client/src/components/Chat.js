@@ -43,6 +43,10 @@ function Chat(props) {
       setRedirect(`/main/${props.name}`);
       socket.emit("userLeave");
     });
+    socket.on("userJoinRoom", (r) => {
+      setRedirect(`/main/${props.name}/${r}`);
+      //socket.emit("userLeave");
+    });
   }, []);
 
   const onMessageSubmit = (e) => {
