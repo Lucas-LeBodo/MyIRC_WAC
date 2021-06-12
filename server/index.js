@@ -73,6 +73,9 @@ io.on("connection", (socket) => {
           const roomList = getRooms();
           io.to(room).emit("sendRoomList", roomList);
         }
+      } else if (messageContent.startsWith("/create")) {
+        const args = messageContent.split(" ");
+        console.log(addRoom(args[1]));
       } else {
         io.to(room).emit("message", from, messageContent);
       }
