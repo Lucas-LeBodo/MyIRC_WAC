@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { IoSend } from "react-icons/io5";
+import { Redirect } from "react-router";
 import io from "socket.io-client";
 
 const socket = io.connect("http://localhost:4000");
@@ -9,6 +10,7 @@ function Chat(props) {
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [room, setRoom] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
   const ChatBox = React.createRef();
 
@@ -36,6 +38,10 @@ function Chat(props) {
     socket.on("sendRoomList", (list) => {
       const rooms = list.join(", ");
       socket.emit("message", "rooms list", rooms, props.room);
+    });
+    socket.on("leaveRoom", () => {
+      setRedirect(`/main/${props.name}`);
+      socket.emit("userLeave");
     });
   }, []);
 
@@ -71,6 +77,10 @@ function Chat(props) {
       );
     });
   };
+
+  if (redirect) {
+    return <Redirect to={{ pathname: redirect }} />;
+  }
 
   return (
     <Fragment>
