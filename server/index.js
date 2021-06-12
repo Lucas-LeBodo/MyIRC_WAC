@@ -84,6 +84,12 @@ io.on("connection", (socket) => {
         const args = messageContent.split(" ");
         console.log(removeRoom(args[1]));
         socket.emit("leaveRoom");
+      } else if (messageContent.startsWith("/join")) {
+        const args = messageContent.split(" ");
+        socket.emit("userJoinRoom", args[1]);
+      } else if (messageContent.startsWith("/part")) {
+        const args = messageContent.split(" ");
+        socket.emit("leaveRoom");
       } else {
         io.to(room).emit("message", from, messageContent);
       }
