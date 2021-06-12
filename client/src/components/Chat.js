@@ -9,6 +9,8 @@ function Chat(props) {
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [room, setRoom] = useState("");
+  const [userslist, setuserslist] = useState([]);
+
   const  ChatBox = React.createRef();
 
   useEffect(() => {
@@ -22,6 +24,17 @@ function Chat(props) {
       setChat( (lastState) => [...lastState, { from, messageContent }]);
     });
   },  []);
+
+  useEffect(() =>{
+      socket.on('sendList', (list) => {
+          setuserslist(list);
+          let usernames = [];
+          list.map((user) => {
+             usernames.push(user.username);
+          });
+          socket.emit("message", 'serveur', 'tets');
+      });
+  }, [])
 
   const onMessageSubmit = (e) => {
     e.preventDefault();
