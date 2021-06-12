@@ -53,6 +53,10 @@ io.on("connection", (socket) => {
     socket.emit("listRoom", roomList);
   });
 
+  socket.on("userLeave", () => {
+    console.log(changeRoom(socket.id, false));
+  });
+
   socket.on("message", (from, messageContent, room) => {
     if (!room) {
       io.emit("globalMessage", from, messageContent);
@@ -76,6 +80,10 @@ io.on("connection", (socket) => {
       } else if (messageContent.startsWith("/create")) {
         const args = messageContent.split(" ");
         console.log(addRoom(args[1]));
+      } else if (messageContent.startsWith("/delete")) {
+        const args = messageContent.split(" ");
+        console.log(removeRoom(args[1]));
+        socket.emit("leaveRoom");
       } else {
         io.to(room).emit("message", from, messageContent);
       }
