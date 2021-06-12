@@ -58,15 +58,26 @@ io.on("connection", (socket) => {
       io.emit("globalMessage", from, messageContent);
     } else {
       socket.join(room);
-      io.to(room).emit("message", from, messageContent);
-    }
-
-    if(messageContent.startsWith('/users')){
-      const usersList = getUsersInRoom(room);
-      io.to(room).emit('sendUserList', usersList )
+      if (messageContent.startsWith("/users")) {
+        const usersList = getUsersInRoom(room);
+        io.to(room).emit("sendUserList", usersList);
+      } else if (messageContent.startsWith("/nick")) {
+        const args = messageContent.split(" ");
+        console.log(addNickname(socket.id, args[1]));
+      } else if (messageContent.startsWith("/list")) {
+        const args = messageContent.split(" ");
+        if (args[1]) {
+          const roomList = getRooms(args[1]);
+          io.to(room).emit("sendRoomList", roomList);
+        } else {
+          const roomList = getRooms();
+          io.to(room).emit("sendRoomList", roomList);
+        }
+      } else {
+        io.to(room).emit("message", from, messageContent);
+      }
     }
   });
-
 
   socket.on("sendPrivateMessage", (message, to) => {
     const recipient = getUserByName(to);

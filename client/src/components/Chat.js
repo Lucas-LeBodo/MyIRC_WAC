@@ -9,7 +9,6 @@ function Chat(props) {
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [room, setRoom] = useState("");
-  const [userslist, setUserslist] = useState([]);
 
   const ChatBox = React.createRef();
 
@@ -27,14 +26,16 @@ function Chat(props) {
 
   useEffect(() => {
     socket.on("sendUserList", (list) => {
-      setUserslist(list);
       let usernames = [];
       list.map((user) => {
         usernames.push(user.username);
       });
-      usernames = usernames.join(", ")
-      console.log(usernames);
-      socket.emit("message", "server", usernames, props.room);
+      usernames = usernames.join(", ");
+      socket.emit("message", "users list", usernames, props.room);
+    });
+    socket.on("sendRoomList", (list) => {
+      const rooms = list.join(", ");
+      socket.emit("message", "rooms list", rooms, props.room);
     });
   }, []);
 
