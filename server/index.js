@@ -90,6 +90,11 @@ io.on("connection", (socket) => {
       } else if (messageContent.startsWith("/part")) {
         const args = messageContent.split(" ");
         socket.emit("leaveRoom");
+      } else if (messageContent.startsWith("/msg")) {
+        const args = messageContent.split(" ");
+        const recipient = getUserByName(args[1]);
+        const name = getUserById(socket.id);
+        socket.to(recipient[0].id).emit("message", name[0].username, args[2]);
       } else {
         io.to(room).emit("message", from, messageContent);
       }
